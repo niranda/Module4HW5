@@ -64,13 +64,14 @@ namespace ShopApp.Queries
             {
                 try
                 {
+                    DbFunctions dbFunctions = null;
                     var data = await _context.Employees
-                        .Select(x => x.HiredDate)
+                        .Select(x => SqlServerDbFunctionsExtensions.DateDiffDay(dbFunctions, x.HiredDate, DateTime.UtcNow))
                         .ToListAsync();
 
                     foreach (var i in data)
                     {
-                        Console.WriteLine($"{DateTime.UtcNow.Subtract(i)}");
+                        Console.WriteLine($"{data} days have passed");
                     }
 
                     Console.WriteLine("2 query done. Time");
