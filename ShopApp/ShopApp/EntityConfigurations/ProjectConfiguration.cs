@@ -21,6 +21,13 @@ namespace ShopApp.EntityConfigurations
                 .WithMany(d => d.Projects)
                 .HasForeignKey(d => d.ClientId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasData(new List<Project>()
+            {
+                new Project() { ProjectId = 1, Name = "First Project", Description = "Some description", Budget = 34, StartedDate = new DateTime(2008, 5, 1, 8, 30, 52), ClientId = 1 },
+                new Project() { ProjectId = 2, Name = "Second Project", Description = "Another description", Budget = 34, StartedDate = new DateTime(2008, 5, 1, 8, 30, 52), ClientId = 1 },
+                new Project() { ProjectId = 3, Name = "Third Project", Description = "Different description", Budget = 34, StartedDate = new DateTime(2008, 5, 1, 8, 30, 52), ClientId = 1 }
+            });
         }
     }
 }

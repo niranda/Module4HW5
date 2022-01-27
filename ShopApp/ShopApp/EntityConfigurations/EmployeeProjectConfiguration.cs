@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using ShopApp.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,6 +24,13 @@ namespace ShopApp.EntityConfigurations
                 .WithMany(p => p.EmployeeProjects)
                 .HasForeignKey(d => d.ProjectId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasData(new List<EmployeeProject>()
+            {
+                new EmployeeProject() { EmployeeProjectId = 1, Rate = 3.78M, StartedDate = new DateTime(2008, 5, 1, 8, 30, 52), EmployeeId = 1, ProjectId = 1 },
+                new EmployeeProject() { EmployeeProjectId = 2, Rate = 4.58M, StartedDate = new DateTime(2008, 5, 1, 8, 30, 52), EmployeeId = 1, ProjectId = 1 },
+                new EmployeeProject() { EmployeeProjectId = 3, Rate = 5.68M, StartedDate = new DateTime(2008, 5, 1, 8, 30, 52), EmployeeId = 1, ProjectId = 1 }
+            });
         }
     }
 }

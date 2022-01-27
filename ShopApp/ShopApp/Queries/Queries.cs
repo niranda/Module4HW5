@@ -69,9 +69,9 @@ namespace ShopApp.Queries
                         .Select(x => SqlServerDbFunctionsExtensions.DateDiffDay(dbFunctions, x.HiredDate, DateTime.UtcNow))
                         .ToListAsync();
 
-                    foreach (var i in data)
+                    foreach (var item in data)
                     {
-                        Console.WriteLine($"{data} days have passed");
+                        Console.WriteLine($"{item} days have passed");
                     }
 
                     Console.WriteLine("2 query done. Time");
@@ -184,8 +184,17 @@ namespace ShopApp.Queries
                 try
                 {
                     var entity = _context.Employees
-                        .GroupBy(item => item.Title)
-                        .Select(item => !item.Key.Name.Contains("a"));
+                        .AsEnumerable()
+                        .GroupBy(item => item.TitleId)
+                        .Select(item => _context.Titles.Where(i => i.TitleId == item.Key).Select(i => i.Name).ToList());
+
+                    foreach (var item in entity)
+                    {
+                        foreach (var i in item)
+                        {
+                            Console.WriteLine($"{i}");
+                        }
+                    }
 
                     Console.WriteLine("6 query done. Titles downloaded");
 
