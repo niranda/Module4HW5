@@ -128,10 +128,15 @@ namespace ShopApp.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("LastName");
 
+                    b.Property<int>("OfficeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TitleId")
                         .HasColumnType("int");
 
                     b.HasKey("EmployeeId");
+
+                    b.HasIndex("OfficeId");
 
                     b.HasIndex("TitleId");
 
@@ -250,11 +255,19 @@ namespace ShopApp.Migrations
 
             modelBuilder.Entity("ShopApp.Entities.Employee", b =>
                 {
+                    b.HasOne("ShopApp.Entities.Office", "Office")
+                        .WithMany("Employees")
+                        .HasForeignKey("OfficeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ShopApp.Entities.Title", "Title")
                         .WithMany("Employees")
                         .HasForeignKey("TitleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Office");
 
                     b.Navigation("Title");
                 });
@@ -297,6 +310,11 @@ namespace ShopApp.Migrations
             modelBuilder.Entity("ShopApp.Entities.Employee", b =>
                 {
                     b.Navigation("EmployeeProjects");
+                });
+
+            modelBuilder.Entity("ShopApp.Entities.Office", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("ShopApp.Entities.Project", b =>

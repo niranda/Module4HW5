@@ -16,7 +16,7 @@ namespace ShopApp.Queries
             _context = context;
         }
 
-       /*  public async Task FirstQuery()
+        public async Task FirstQuery()
         {
             await using (var transaction = await _context.Database.BeginTransactionAsync())
             {
@@ -41,11 +41,12 @@ namespace ShopApp.Queries
                                   HiredDate = someData.HiredDate,
                               };
 
-                    Console.WriteLine("Left Join");
                     foreach (var i in res)
                     {
                         Console.WriteLine($"{i.CompanyName} {i.OfficeLocation} {i.HiredDate}");
                     }
+
+                    Console.WriteLine("1 query done. Left Join");
 
                     await transaction.CommitAsync();
                 }
@@ -55,7 +56,7 @@ namespace ShopApp.Queries
                     await transaction.RollbackAsync();
                 }
             }
-        } */
+        }
 
         public async Task SecondQuery()
         {
@@ -67,11 +68,12 @@ namespace ShopApp.Queries
                         .Select(x => x.HiredDate)
                         .ToListAsync();
 
-                    Console.WriteLine("Time");
                     foreach (var i in data)
                     {
                         Console.WriteLine($"{DateTime.UtcNow.Subtract(i)}");
                     }
+
+                    Console.WriteLine("2 query done. Time");
 
                     await transaction.CommitAsync();
                 }
@@ -103,7 +105,7 @@ namespace ShopApp.Queries
                         _context.Offices.Update(secondData);
                     }
 
-                    Console.WriteLine("Entities updated");
+                    Console.WriteLine("3 query done. Entities updated");
 
                     await _context.SaveChangesAsync();
 
@@ -129,9 +131,10 @@ namespace ShopApp.Queries
                         LastName = "Brown",
                         HiredDate = new DateTime(2015, 7, 20),
                         Title = new Title() { Name = "Some title" },
+                        Office = new Office() { Location = "London", Title = "Big One" }
                     });
 
-                    Console.WriteLine("Entities added");
+                    Console.WriteLine("4 query done. Entities added");
 
                     await _context.SaveChangesAsync();
 
@@ -159,7 +162,7 @@ namespace ShopApp.Queries
                         _context.Remove(entityOnDelete);
                     }
 
-                    Console.WriteLine("Entities removed");
+                    Console.WriteLine("5 query done. Entities removed");
 
                     await _context.SaveChangesAsync();
 
@@ -183,7 +186,7 @@ namespace ShopApp.Queries
                         .GroupBy(item => item.Title)
                         .Select(item => !item.Key.Name.Contains("a"));
 
-                    Console.WriteLine("Titles downloaded");
+                    Console.WriteLine("6 query done. Titles downloaded");
 
                     await transaction.CommitAsync();
                 }
